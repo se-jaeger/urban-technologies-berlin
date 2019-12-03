@@ -2,26 +2,19 @@ name: urban-technologies-berlin
 channels:
   - defaults
   - conda-forge
-  - pytorch
 dependencies:
-  - python>=3.6
+  - python>=3.7
   - pip
   - numpy
-  - scipy
   - pandas
-  - dask
-  - ipython
+  - geopandas
   - tqdm
-  - click
-  - matplotlib
-  - seaborn
-  - altair
-  - statsmodels
-  - scikit-learn
-  - pytorch
+  - beautifulsoup4
+  - colour
+  - folium
   - pip:
      # add here only pip-packages that are not available in conda/conda-forge! E.g.:
-     - optuna
+     - sphinx-rtd-theme
   # for development only (could also be kept in a separate environment file)
   - jupyterlab
   - pytest
@@ -32,3 +25,4 @@ dependencies:
   - nbstripout
   - sphinx
   - recommonmark
+  - jupytext

@@ -48,3 +48,9 @@ MANIFEST
 
 # Per-project virtualenvs
 .venv*/
+
+# Thanks to jupytext
+**.ipynb
+
+.linked_env
+.vscode
