@@ -33,11 +33,9 @@ district_raw = os.path.join(data_raw, "district")
 ground_level_raw = os.path.join(data_raw, "ground_level")
 
 data_interim = "../data/interim"
-
-data_preprocessed = "../data/preprocessed"
-sealing_preprocessed = os.path.join(data_preprocessed, "sealing")
-district_preprocessed = os.path.join(data_preprocessed, "district")
-ground_level_preprocessed = os.path.join(data_preprocessed, "ground_level")
+sealing_interim = os.path.join(data_interim, "sealing")
+district_interim = os.path.join(data_interim, "district")
+ground_level_interim = os.path.join(data_interim, "ground_level")
 
 district_url = "https://opendata.arcgis.com/datasets/9f5d82911d4545c4be1da8cab89f21ae_0.geojson"
 
@@ -54,9 +52,9 @@ for directory in [
     sealing_raw,
     district_raw,
     ground_level_raw,
-    sealing_preprocessed,
-    district_preprocessed,
-    ground_level_preprocessed
+    sealing_interim,
+    district_interim,
+    ground_level_interim
         ]:
     if not os.path.exists(directory):
         os.makedirs(directory)
@@ -67,7 +65,7 @@ for directory in [
 # Uses the `berlin-opendata-downloader`: https://github.com/se-jaeger/berlin-gelaendemodelle-downloader
 # Compress the data on the fly to a tile size of `5x5`.
 
-# %% jupyter={"outputs_hidden": true}
+# %%
 # !pip install berlin-opendata-downloader
 # !berlin_downloader download {ground_level_raw} --compress 5 --file-format geojson
 
@@ -119,7 +117,7 @@ df_ground_level_subset["x gradient"] = ground_level_gradients[1].flatten()
 
 # %%
 # save the preprocessed DataFrame
-df_ground_level_subset.to_file(os.path.join(ground_level_preprocessed, "ground_level_subset.geojson"), driver="GeoJSON")
+df_ground_level_subset.to_file(os.path.join(ground_level_interim, "ground_level_subset.geojson"), driver="GeoJSON")
 
 # %%
 df_ground_level_subset.head()
@@ -142,7 +140,7 @@ df_districts.to_file(os.path.join(district_raw, "districts.geojson"), driver="Ge
 # drop some columns, rename the rest, and save the data
 df_districts = df_districts[["Gemeinde_n", "geometry"]]
 df_districts.columns = ["district", "geometry"]
-df_districts.to_file(os.path.join(district_preprocessed, "districts.geojson"), driver="GeoJSON")
+df_districts.to_file(os.path.join(district_interim, "districts.geojson"), driver="GeoJSON")
 
 # %%
 df_districts.head()
@@ -168,7 +166,7 @@ df_sealing = gpd.read_file(os.path.join(sealing_raw, "sealing.geojson"))
 df_sealing = df_sealing[["BEZIRK", "VG_0", "geometry"]]
 df_sealing.columns = ["district", "sealing", "geometry"]
 
-df_sealing.to_file(os.path.join(sealing_preprocessed, "sealing.geojson"), driver="GeoJSON")
+df_sealing.to_file(os.path.join(sealing_interim, "sealing.geojson"), driver="GeoJSON")
 
 # %%
 df_sealing.head()
