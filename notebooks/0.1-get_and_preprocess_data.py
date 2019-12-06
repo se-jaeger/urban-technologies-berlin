@@ -41,10 +41,9 @@ district_url = "https://opendata.arcgis.com/datasets/9f5d82911d4545c4be1da8cab89
 
 # %%
 x_coordinate_start = 390
-y_coordinate_start = 5822
+y_coordinate_start = 5818
 
-number_of_tiles = 4
-coordinate_step_size = 2
+number_of_tiles = 2
 
 # %%
 # first, setup all directories
@@ -92,8 +91,8 @@ file_names = []
 for x_offset in range(number_of_tiles):
     for y_offset in range(number_of_tiles):
 
-        x = x_coordinate_start + x_offset * coordinate_step_size
-        y = y_coordinate_start + y_offset * coordinate_step_size
+        x = x_coordinate_start + x_offset * 2
+        y = y_coordinate_start + y_offset * 2
 
         file_names.append(os.path.join(ground_level_raw, f"{x}_{y}.geojson"))
 
