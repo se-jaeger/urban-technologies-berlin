@@ -132,18 +132,18 @@ df_ground_level_subset.head()
 
 # %%
 # get and save the raw data
-df_districts = gpd.read_file(district_url)
-df_districts.to_crs(crs={"init": "epsg:25833"}, inplace=True)
-df_districts.to_file(os.path.join(district_raw, "districts.geojson"), driver="GeoJSON")
+df_district = gpd.read_file(district_url)
+df_district.to_crs(crs={"init": "epsg:25833"}, inplace=True)
+df_district.to_file(os.path.join(district_raw, "district.geojson"), driver="GeoJSON")
 
 # %%
 # drop some columns, rename the rest, and save the data
-df_districts = df_districts[["Gemeinde_n", "geometry"]]
-df_districts.columns = ["district", "geometry"]
-df_districts.to_file(os.path.join(district_interim, "districts.geojson"), driver="GeoJSON")
+df_district = df_district[["Gemeinde_n", "geometry"]]
+df_district.columns = ["district", "geometry"]
+df_district.to_file(os.path.join(district_interim, "district.geojson"), driver="GeoJSON")
 
 # %%
-df_districts.head()
+df_district.head()
 
 # %% [markdown]
 # ## District Data Description
