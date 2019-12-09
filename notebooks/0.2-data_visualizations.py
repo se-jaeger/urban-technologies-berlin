@@ -81,3 +81,43 @@ map_sealing.save(os.path.join(map_htmls, "sealing.html"))
 
 # %% [markdown]
 # ![District Data](../reports/figures/maps/png/sealing.png)
+
+# %% [markdown]
+# # Fixing Missing Values for Sealing
+#
+# As described in the documentation of the sealing data set, there are no observations for streets,
+# but can be assumed as 100% sealing.
+#
+# Missing areas are shown as white.
+#
+# ![Sealing Data (Subset)](../reports/figures/maps/png/sealing_subset.png)
+
+# %% [markdown]
+# `GeoDataFrame`s can do spatial joins. The following keeps the structure of the `df_ground_level`
+# and fills missing sealing values with 100%.
+
+# %%
+joined = gpd.sjoin(df_ground_level, df_sealing, how="left")
+joined["sealing"] = joined["sealing"].fillna(100)
+joined.drop(columns=["index_right"], inplace=True)
+
+joined.head()
+
+# %% [markdown]
+# Obviously, there are some duplicated rows (See index).
+# This happens because it is possible that multiple ground level tiles intersect more than one sealing areas.
+#
+# To get smoother transitions, average the values for the duplicated tiles (indices) and remove the duplicates.
+
+# %%
+duplicates_index = joined[joined.duplicated("geometry", keep=False)].index.unique()
+
+mean_sealing = [joined.loc[index]["sealing"].mean() for index in duplicates_index]
+joined.drop_duplicates("geometry", inplace=True)
+joined.loc[duplicates_index, "sealing"] = mean_sealing
+
+joined.to_file(os.path.join(data_preprocessed, "joined_ground-level_sealing.geojson"), driver="GeoJSON")
+joined.head()
+
+# %% [markdown]
+# This is the final data and used in further computations.
