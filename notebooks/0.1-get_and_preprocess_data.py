@@ -162,8 +162,8 @@ df_district.head()
 df_sealing = gpd.read_file(os.path.join(sealing_raw, "sealing.geojson"))
 
 # %%
-df_sealing = df_sealing[["BEZIRK", "VG_0", "geometry"]]
-df_sealing.columns = ["district", "sealing", "geometry"]
+df_sealing = df_sealing[["VG_0", "geometry"]]
+df_sealing.columns = ["sealing", "geometry"]
 
 df_sealing.to_file(os.path.join(sealing_interim, "sealing.geojson"), driver="GeoJSON")
 
