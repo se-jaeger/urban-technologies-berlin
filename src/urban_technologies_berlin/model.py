@@ -2,6 +2,16 @@ import numpy as np
 
 
 def R(water_in_liter: int, tile_square_meter: int) -> float:
+    """
+    Computes the water depth for ``water_in_liter`` on a tile with ``tile_square_meter``.
+
+    Args:
+        water_in_liter (int): Vector of shape ``n x 1`` of water measurements.
+        tile_square_meter (int): Square meters of one tile.
+
+    Returns:
+        float: Vector of shape ``n x 1``, water depth for each of the n tiles.
+    """
     return water_in_liter / (tile_square_meter * 1000)
 
 
