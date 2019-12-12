@@ -1,5 +1,6 @@
 
 from colour import Color
+from geopandas import GeoDataFrame
 
 
 def _color_ramp_factory(color_a: str, color_b: str, value_range: (int, int)) -> object:
@@ -60,3 +61,19 @@ def style_function_factory(column: str, color_a: str, color_b: str, value_range:
         }
 
     return style_function
+
+
+def get_tile_square_meter(data: GeoDataFrame) -> int:
+    """
+    Helper funciton that computes the square meter of the given ``data``.
+
+    Args:
+        data (GeoDataFrame): Data that has the form of ground level information.
+
+    Returns:
+        int: Square meter for one tile.
+    """
+    geometry_coordinates = data[:1]["geometry"].values[0].exterior.xy[0]
+    tile_size = int(geometry_coordinates[1] - geometry_coordinates[0])
+
+    return tile_size ** 2  # this is okey because they are always squares
