@@ -144,6 +144,30 @@ def water_flow_velocity(
     return gradient_direction * result_absolute
 
 
+# %% [markdown]
+# ## Calculate Distance for Timestep
+#
+# To calculate the amount of water that flows from one tile to another, the flowed distance is needed.
+
+# %%
+def water_flow_distance(water_velocities: float, timestep: int = 10) -> float:
+    """
+    [summary]
+
+    Args:
+        water_velocities (float): Matrix of the water flow velocities of shape ``n x 2`` in ``x`` and ``y`` direction.
+        timestep (int, optional): Minutes for one timestep. Defaults to 10.
+
+    Returns:
+        float:: [description]
+    """
+    timestep_seconds = timestep * 60
+
+    return water_velocities * timestep_seconds
+
+
+# %%
+
 # %%
 
 # %%
