@@ -4,7 +4,7 @@ from colour import Color
 
 def _color_ramp_factory(color_a: str, color_b: str, value_range: (int, int)) -> object:
     """
-    [summary]
+    Helper function that initializes and returns a color ramp function.
 
     Args:
         color_a (str): color at the lower bound of the columns ``value_range``
