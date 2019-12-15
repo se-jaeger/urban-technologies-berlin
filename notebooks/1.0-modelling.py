@@ -19,6 +19,8 @@ import os
 
 import geopandas as gpd
 import numpy as np
+from geopandas import GeoDataFrame
+from numpy import ndarray
 
 from urban_technologies_berlin.utils import get_tile_size, get_tile_square_meter
 
@@ -98,16 +100,16 @@ data = gpd.read_file(data_path)
 # $$height = \frac{water\ amount}{length * width * 1000} = \frac{water\ amount}{tile\ square\ meter * 1000}$$
 
 # %%
-def R(water_in_liter: int, tile_square_meter: int) -> float:
+def R(water_in_liter: ndarray, tile_square_meter: int) -> ndarray:
     """
     Computes the water depth for ``water_in_liter`` on a tile with ``tile_square_meter``.
 
     Args:
-        water_in_liter (int): Vector of shape ``n x 1`` of water measurements.
+        water_in_liter (ndarray): Vector of shape ``n x 1`` of water measurements.
         tile_square_meter (int): Square meters of one tile.
 
     Returns:
-        float: Vector of shape ``n x 1``, water depth for each of the n tiles.
+        ndarray: Vector of shape ``n x 1``, water depth for each of the n tiles.
     """
     return water_in_liter / (tile_square_meter * 1000)
 
@@ -123,22 +125,22 @@ def R(water_in_liter: int, tile_square_meter: int) -> float:
 
 # %%
 def water_flow_velocity(
-        water_in_liter: int,
-        gradients: (float, float),
+        water_in_liter: ndarray,
+        gradients: ndarray,
         tile_square_meter: int,
         kst: int = 100
-    ) -> (float, float):
+    ) -> float:
     """
     Computes the water flow velocities in ``x`` and ``y`` direction for given water levels and gradients of a tile.
 
     Args:
-        water_in_liter (int): Vector of shape ``n x 1`` of water measurements.
-        gradients ((float, float)): Matrix of shape ``n x 2`` of gradients in ``x`` and ``y`` direction.
+        water_in_liter (ndarray): Vector of shape ``n x 1`` of water measurements.
+        gradients (ndarray): Matrix of shape ``n x 2`` of gradients in ``x`` and ``y`` direction.
         tile_square_meter (int): Square meters of one tile.
         kst (int, optional): Constant value for specific surface. Defaults to 100.
 
     Returns:
-        float: Matrix of the water flow velocities of shape ``n x 2`` in ``x`` and ``y`` direction.
+        ndarray: Matrix of the water flow velocities of shape ``n x 2`` in ``x`` and ``y`` direction.
     """
     gradient_direction = np.sign(gradients)
     result_absolute = kst * np.cbrt(R(water_in_liter, tile_square_meter) ** 2) * np.sqrt(np.absolute(gradients))
@@ -152,16 +154,16 @@ def water_flow_velocity(
 # To calculate the amount of water that flows from one tile to another, the flowed distance is needed.
 
 # %%
-def water_flow_distance(water_velocities: float, timestep: int = 10) -> float:
+def water_flow_distance(water_velocities: ndarray, timestep: int = 10) -> ndarray:
     """
     Computes the water flow distance in ``x`` and ``y`` direction.
 
     Args:
-        water_velocities (float): Matrix of the water flow velocities of shape ``n x 2`` in ``x`` and ``y`` direction.
+        water_velocities (ndarray): Matrix of the water flow velocities of shape ``n x 2`` in ``x`` and ``y`` direction.
         timestep (int, optional): Minutes for one timestep. Defaults to 10.
 
     Returns:
-        float: Matrix of the water flow distances of shape ``n x 2`` in ``x`` and ``y`` direction.
+        flondarrayat: Matrix of the water flow distances of shape ``n x 2`` in ``x`` and ``y`` direction.
     """
     timestep_seconds = timestep * 60
 
@@ -174,16 +176,16 @@ def water_flow_distance(water_velocities: float, timestep: int = 10) -> float:
 # Simplification, only take the flow parallel to the axes into account.
 
 # %%
-def water_flow(water_distances: float, tile_size: int) -> float:
+def water_flow(water_distances: ndarray, tile_size: int) -> ndarray:
     """
     Computes the water flow in ``x`` and ``y`` direction.
 
     Args:
-        water_distances (float): Matrix of the water flow distances of shape ``n x 2`` in ``x`` and ``y`` direction.
+        water_distances (ndarray): Matrix of the water flow distances of shape ``n x 2`` in ``x`` and ``y`` direction.
         tile_size (int): Square meter for one tile.
 
     Returns:
-        float: Matrix of water flow in percentages of shape ``n x 2`` in ``x`` and ``y`` direction.
+        ndarray: Matrix of water flow in percentages of shape ``n x 2`` in ``x`` and ``y`` direction.
     """
     water_distance_directions = np.sign(water_distances)
     absolute_water_distances = np.absolute(water_distances)
