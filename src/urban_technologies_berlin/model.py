@@ -54,3 +54,24 @@ def water_flow_distance(water_velocities: float, timestep: int = 10) -> float:
     timestep_seconds = timestep * 60
 
     return water_velocities * timestep_seconds
+
+
+def water_flow(water_distances: float, tile_size: int) -> float:
+    """
+    Computes the water flow in ``x`` and ``y`` direction.
+
+    Args:
+        water_distances (float): Matrix of the water flow distances of shape ``n x 2`` in ``x`` and ``y`` direction.
+        tile_size (int): Square meter for one tile.
+
+    Returns:
+        float: Matrix of water flow in percentages of shape ``n x 2`` in ``x`` and ``y`` direction.
+    """
+    water_distance_directions = np.sign(water_distances)
+    absolute_water_distances = np.absolute(water_distances)
+
+    # used to calculate the percentage water flow
+    sum_distances = np.maximum(np.sum(absolute_water_distances, axis=1), tile_size)
+    fraction_of_water_flow = absolute_water_distances.T / sum_distances
+
+    return fraction_of_water_flow.T * water_distance_directions
