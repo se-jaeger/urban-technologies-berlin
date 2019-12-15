@@ -131,7 +131,7 @@ def water_flow_velocity(
 
     Args:
         water_in_liter (int): Vector of shape ``n x 1`` of water measurements.
-        gradients ([type]): Matrix of shape ``n x 2`` of gradients in ``x`` and ``y`` direction.
+        gradients ((float, float)): Matrix of shape ``n x 2`` of gradients in ``x`` and ``y`` direction.
         tile_square_meter (int): Square meters of one tile.
         kst (int, optional): Constant value for specific surface. Defaults to 100.
 
@@ -152,14 +152,14 @@ def water_flow_velocity(
 # %%
 def water_flow_distance(water_velocities: float, timestep: int = 10) -> float:
     """
-    [summary]
+    Computes the water flow distance in ``x`` and ``y`` direction.
 
     Args:
         water_velocities (float): Matrix of the water flow velocities of shape ``n x 2`` in ``x`` and ``y`` direction.
         timestep (int, optional): Minutes for one timestep. Defaults to 10.
 
     Returns:
-        float:: [description]
+        float: Matrix of the water flow distances of shape ``n x 2`` in ``x`` and ``y`` direction.
     """
     timestep_seconds = timestep * 60
 
