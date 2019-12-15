@@ -17,6 +17,23 @@ def R(water_in_liter: ndarray, tile_square_meter: int) -> ndarray:
     return water_in_liter / (tile_square_meter * 1000)
 
 
+def init_and_get_matrix(data: GeoDataFrame) -> ndarray:
+    """
+    Initialize the data ``GeoDataFrame`` with ``water level`` column and convert int into a ``ndarray``.
+    
+    Args:
+        data (``GeoDataFrame``): The data.
+    
+    Returns:
+        ``ndarray``: The data as ``ndarray`` matrix.
+    """
+    data["water level"] = 0
+    columns = ["height", "y gradient", "x gradient", "sealing", "water level"]
+    tiles_per_direction = int(np.sqrt(data.shape[0]))
+    
+    return np.array(data[columns]).reshape((tiles_per_direction, tiles_per_direction, len(columns)))
+
+
 def water_flow_velocity(
         water_in_liter: ndarray,
         gradients: ndarray,

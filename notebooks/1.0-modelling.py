@@ -149,6 +149,27 @@ def water_flow_velocity(
 
 
 # %% [markdown]
+# ## Initialize `data` DataFrame and Convert to Matrix
+
+# %%
+def init_and_get_matrix(data: GeoDataFrame) -> ndarray:
+    """
+    Initialize the data ``GeoDataFrame`` with ``water level`` column and convert int into a ``ndarray``.
+    
+    Args:
+        data (``GeoDataFrame``): The data.
+    
+    Returns:
+        ``ndarray``: The data as ``ndarray`` matrix.
+    """
+    data["water level"] = 0
+    columns = ["height", "y gradient", "x gradient", "sealing", "water level"]
+    tiles_per_direction = int(np.sqrt(data.shape[0]))
+    
+    return np.array(data[columns]).reshape((tiles_per_direction, tiles_per_direction, len(columns)))
+
+
+# %% [markdown]
 # ## Calculate Distance for Timestep
 #
 # To calculate the amount of water that flows from one tile to another, the flowed distance is needed.
@@ -195,6 +216,10 @@ def water_flow(water_distances: ndarray, tile_size: int) -> ndarray:
     fraction_of_water_flow = absolute_water_distances.T / sum_distances
 
     return fraction_of_water_flow.T * water_distance_directions
+
+
+# %% [markdown]
+# ## Update the Water Level
 
 # %%
 
