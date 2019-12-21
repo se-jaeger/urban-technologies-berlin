@@ -16,23 +16,23 @@
 # %%
 import os
 
-import folium
+import contextily as ctx
 import geopandas as gpd
-
-from urban_technologies_berlin.utils import style_function_factory
+import matplotlib.pyplot as plt
+from matplotlib.colors import LinearSegmentedColormap
 
 # %%
 data = "../data"
 data_interim = os.path.join(data, "interim")
 data_preprocessed = os.path.join(data, "preprocessed")
 
-map_htmls = os.path.join("../reports/figures/maps/html")
+map_pdf = os.path.join("../reports/figures/maps/pdf")
 
 # %%
 # first, setup all directories
 for directory in [
-    map_htmls
-        ]:
+    map_pdf
+]:
     if not os.path.exists(directory):
         os.makedirs(directory)
 
@@ -47,40 +47,50 @@ df_ground_level = gpd.read_file(ground_level)
 
 # %% [markdown]
 # # Visualize the Data
+#
+# ## Districts of Berlin
 
 # %%
-map_district = folium.Map(location=[52.5112, 13.3965], zoom_start=12, tiles="stamentoner")
-folium.GeoJson(df_district).add_to(map_district)
-
-map_district.save(os.path.join(map_htmls, "district.html"))
+map_district = df_district.to_crs(epsg=3857).plot(
+    figsize=(15, 15),
+    alpha=0.2,
+    edgecolor="black",
+    linewidth=3,
+)
+ctx.add_basemap(map_district, url=ctx.providers.Stamen.TonerLite)
+map_district.set_axis_off()
 
 # %% [markdown]
-# ![District Data](../reports/figures/maps/png/district.png)
+# ## Ground Level of Berlin
 
 # %%
 min_ground_level = df_ground_level["height"].min()
 max_ground_level = df_ground_level["height"].max()
 
-map_ground_level = folium.Map(location=[52.5112, 13.3965], zoom_start=14, tiles="stamentoner")
-folium.GeoJson(df_ground_level,
-                style_function=style_function_factory("height", "green", "red", (min_ground_level, max_ground_level))
-              ).add_to(map_ground_level)
-
-map_ground_level.save(os.path.join(map_htmls, "ground_level_subset.html"))
+map_ground_level = df_ground_level.to_crs(epsg=3857).plot(
+    figsize=(15, 15),
+    column="height",
+    alpha=0.5,
+    cmap=LinearSegmentedColormap.from_list("", ["blue", "yellow", "orange"], N=1000),
+    norm=plt.Normalize(min_ground_level, max_ground_level)
+)
+ctx.add_basemap(map_ground_level, url=ctx.providers.Stamen.TonerLite)
+map_ground_level.set_axis_off()
 
 # %% [markdown]
-# ![Ground Level Data](../reports/figures/maps/png/ground_level_subset.png)
+# ## Level of Sealing of Berlin
 
 # %%
-map_sealing = folium.Map(location=[52.5112, 13.3965], zoom_start=12, tiles="stamentoner")
-folium.GeoJson(df_sealing,
-                style_function=style_function_factory("sealing", "green", "red", (0, 100))
-              ).add_to(map_sealing)
-
-map_sealing.save(os.path.join(map_htmls, "sealing.html"))
-
-# %% [markdown]
-# ![District Data](../reports/figures/maps/png/sealing.png)
+map_sealing = df_sealing.to_crs(epsg=3857).plot(
+    figsize=(15, 15),
+    column="sealing",
+    alpha=0.5,
+    cmap=LinearSegmentedColormap.from_list("", ["green", "yellow", "orange", "red"], N=1000),
+    norm=plt.Normalize(0, 100)
+)
+ctx.add_basemap(map_sealing, url=ctx.providers.Stamen.TonerLite)
+map_sealing.set_axis_off()
+plt.savefig(os.path.join(map_pdf, "sealing.pdf"), optimize=True, bbox_inches="tight", pad_inches=0)
 
 # %% [markdown]
 # # Fixing Missing Values for Sealing
@@ -90,7 +100,7 @@ map_sealing.save(os.path.join(map_htmls, "sealing.html"))
 #
 # Missing areas are shown as white.
 #
-# ![Sealing Data (Subset)](../reports/figures/maps/png/sealing_subset.png)
+# ![Zoomed Sealing Map](../reports//figures/maps/jpg/sealing_zoomed.png)
 
 # %% [markdown]
 # `GeoDataFrame`s can do spatial joins. The following keeps the structure of the `df_ground_level`

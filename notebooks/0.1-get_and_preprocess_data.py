@@ -122,11 +122,6 @@ df_ground_level_subset.to_file(os.path.join(ground_level_interim, "ground_level_
 df_ground_level_subset.head()
 
 # %% [markdown]
-# ## Ground Level Data Description
-#
-# TODO
-
-# %% [markdown]
 # # Districts of Berlin
 
 # %%
@@ -143,11 +138,6 @@ df_district.to_file(os.path.join(district_interim, "district.geojson"), driver="
 
 # %%
 df_district.head()
-
-# %% [markdown]
-# ## District Data Description
-#
-# TODO
 
 # %% [markdown]
 # # Level of Sealing
@@ -169,10 +159,3 @@ df_sealing.to_file(os.path.join(sealing_interim, "sealing.geojson"), driver="Geo
 
 # %%
 df_sealing.head()
-
-# %% [markdown]
-# ## Level of Sealing Data Description
-#
-# TODO
-
-# %%
