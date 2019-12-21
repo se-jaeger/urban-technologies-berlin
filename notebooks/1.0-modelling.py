@@ -72,6 +72,67 @@ data = gpd.read_file(data_path)
 # | very strong | $> 8.3\ mm$|
 #
 # (Source - Deutscher Wetter Dienst: https://www.dwd.de/DE/service/lexikon/Functions/glossar.html?lv2=101812&lv3=101906
+
+# %% [markdown]
+# ## Initialize `data` DataFrame and Convert to Matrix
+
+# %%
+def list2matrix(data: ndarray) -> ndarray:
+    """
+    Converts the ``ndarray`` from list shape (n x columns) into squared matrix shape (sqrt(n) x sqrt(n) x columns).
+    """
+    if len(data.shape) != 2:
+        raise ValueError("Not in 'list' form!")
+    
+    tiles_per_direction = int(np.sqrt(data.shape[0]))
+    
+    dims = []
+    
+    for index in range(data.shape[1]):
+        dims.append(data[:, index].reshape((tiles_per_direction, tiles_per_direction)))
+    
+    return np.stack(dims, axis=2)
+    
+    
+def matrix2list(data: ndarray) -> ndarray:
+    """
+    Converts the ``ndarray`` from squared matrix shape (sqrt(n) x sqrt(n) x columns) into list shape (n x columns).
+    """
+    if len(data.shape) != 3:
+        raise ValueError("Not in 'matrix' form!")
+                    
+    dims = []
+
+    for index in range(data.shape[2]):
+        dims.append(data[:, :, index].flatten())
+    
+    return np.stack(dims, axis=1)
+
+
+# %%
+def init_and_get_list_form(data: GeoDataFrame) -> ndarray:
+    """
+    Initialize the data ``GeoDataFrame`` with ``water level`` column and convert it into a ``ndarray``.
+    """
+    columns = ["water level", "x gradient", "y gradient", "sealing"]
+    tiles_per_direction = int(np.sqrt(data.shape[0]))
+    
+    data["water level"] = 0
+
+    return data[columns].values
+
+
+# %% [markdown]
+# ## Water Infiltration
+#
+# The follwing figure shows some examples for the water infiltration on given constraints.
+#
+# <img src="../reports/figures/misc/sealing_examples.png" />
+#
+# **Original:** http://www.stadtentwicklung.berlin.de/umwelt/umweltatlas/e_tab/ta213_03.gif
+#
+#
+# I took the following values as reference points, ignored all other variables, and assumed a linear scale in between.
 #
 #
 #
