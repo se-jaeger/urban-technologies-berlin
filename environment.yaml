@@ -11,7 +11,10 @@ dependencies:
   - tqdm
   - beautifulsoup4
   - colour
-  - folium
+  - matplotlib
+  - descartes
+  - contextily
+  - pillow
   - pip:
      # add here only pip-packages that are not available in conda/conda-forge! E.g.:
      - sphinx-rtd-theme
