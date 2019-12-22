@@ -379,11 +379,13 @@ def simulate(
     data_ndarray = init_and_get_list_form(data_data_frame)
 
     # create necessary directories
-    directory_name = f"tile_size-{tile_size}-rain-{rainfall}"
+    directory_name = f"tile_size-{tile_size}-rain-{rainfall}-timestep-{timestep_size}"
     directory = os.path.join(data_path, directory_name)
 
     if not os.path.exists(directory):
         os.makedirs(directory)
+
+    rainfall = rainfall * 1 / 10 * timestep_size
 
     # Run the actual simulation
     for index in range(iterations):
@@ -413,9 +415,11 @@ def simulate(
 data_path = os.path.join("../data", "preprocessed", "joined_ground-level_sealing.geojson")
 data_data_frame = gpd.read_file(data_path)
 
-rainfall = 1
-time_step_size = 1
+rainfall = [1, 5, 10]
+timestep_sizes = [1, 10]
 iterations = 30
 
 # %%
-simulate(data_data_frame, rainfall, time_step_size, iterations)
+for timestep_size in timestep_sizes:
+    for rain in rainfall:
+        simulate(data_data_frame, rain, timestep_size, iterations)
