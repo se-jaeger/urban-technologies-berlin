@@ -58,10 +58,13 @@ for directory in [
 # and finaly combines them to an animated gif.
 
 # %%
-critical_water_level = 10  # in cm
+critical_water_level = 30  # in cm
 
 # %%
 for simulation in simulation_names:
+
+    image_files = []
+
     for step in range(iterations):
 
         file_name = f"{simulation}-step-{step}"
@@ -84,8 +87,11 @@ for simulation in simulation_names:
         ctx.add_basemap(map_water_level, url=ctx.providers.Stamen.TonerLite)
         map_water_level.set_axis_off()
 
+        image_file = os.path.join(simulation_jpg, simulation, f"{file_name}.jpg")
+        image_files.append(image_file)
+
         plt.savefig(
-            os.path.join(simulation_jpg, simulation, f"{file_name}.jpg"),
+            image_file,
             optimize=True,
             bbox_inches="tight",
             pad_inches=0
@@ -96,7 +102,6 @@ for simulation in simulation_names:
         del data_frame
 
     # create the gif file
-    image_files = glob(os.path.join(simulation_jpg, simulation, "*.jpg"))
     images = [Image.open(image_file) for image_file in image_files]
 
     images[0].save(

@@ -261,7 +261,34 @@ def water_flow(water_distances: ndarray, tile_size: int) -> ndarray:
 # %% [markdown]
 # ## Update the Water Level
 #
-# TODO: description..
+# The data for `water level`, `water flow x`, and `water flow y` gets concatenated as shown in the following figure.
+#
+# ![Data Structure](../reports/figures/misc/update_data_structure.pdf)
+#
+# For a performant calculation of the updated water level,
+# the matrix gets shifted in all 4 directions as shown in the following figure.
+#
+# ![Data Structure](../reports/figures/misc/update_calculation_explanation.pdf)
+#
+# **Example of the tile with water level `5`:**
+#
+# To calculate the water that flows into this tile from the right, the `left shifted` matrix is needed. Then:
+# 1. If the value for `water flow x` is negative, i.e. flow direction to the left, calculate at the same position:
+#     - $water\ level * water\ flow\ x$
+#
+# Also, calculate for the three other matrices correspondingly.
+# For the possibility that not all water moves from one tile to another, calculate the remaining water level.
+# -> $input\ water\ level * 1 - (abs(water\ flow\ x) + abs(water\ flow\ y))$
+#
+# Finally, the new water level of the tile is the sum of the 4 values (from right, left, above, below)
+# and the remaining water level.
+#
+# These calculations are sensible because values for `water flow` are percentage values.
+#
+# Because numpy arrays are used, the above calculations get applied
+# to each and every tile at the same time (in parallel).
+#
+# **Note:** water at the border can get lost
 
 # %%
 def updated_water_level(data_as_matrix: ndarray, water_update_as_matrix: ndarray) -> ndarray:
@@ -329,7 +356,7 @@ def updated_water_level(data_as_matrix: ndarray, water_update_as_matrix: ndarray
 # %% [markdown]
 # ## Timestep Based Simulation
 #
-# TODO: Putting all parts together ..
+# Putting all parts together for water movement simulations.
 
 # %%
 def simulate(
