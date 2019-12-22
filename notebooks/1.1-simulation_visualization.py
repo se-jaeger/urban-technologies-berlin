@@ -58,7 +58,7 @@ for directory in [
 # and finaly combines them to an animated gif.
 
 # %%
-critical_water_level = 10  # in cm
+critical_water_level = 30  # in cm
 
 # %%
 for simulation in simulation_names:
