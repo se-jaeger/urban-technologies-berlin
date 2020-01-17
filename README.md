@@ -1,16 +1,26 @@
-# urban-technologies-berlin
+# Simulation of Heavy Rain in Berlin
 
-Add a short description here!
+Simulates the water mass flows in Berlin after strong precipitation. Uses exclusively open data sources like the [Berlin Open Data Portal](https://daten.berlin.de).
+
+
+## Thank You!
+
+Many thanks to my fellow student and friend [chrisschroer](https://github.com/chrisschroer) for the offline discussions.
 
 
 ## Description
 
-A longer description of your project goes here...
+This project carried out as part of the Urban Technology course at the Beuth University of Applied Sciences in Berlin of the masters course Data Science. Please note this.
+
+Please have a look at the [slides](./reports/slides.pdf) of the internal given presentation. A simulation of the rainfalls in 2017 are [here available](https://www.dropbox.com/sh/xhl0benckd0pe3h/AAAq-ntIGVHpD5AdtqRwG5iIa?dl=0).
 
 
-## Work in Progress
+## Generating the Notebooks
 
-- [ ] Fix the TODOs
+Since I used Jupytext for easier version control, there are unfortunately no rendered notebooks. To generate them, use:
+```
+jupytext --to ipynb notebooks/*.py
+```
 
 
 ## Information about the Scaffold
