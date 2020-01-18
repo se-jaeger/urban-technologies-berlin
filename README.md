@@ -15,13 +15,6 @@ This project carried out as part of the Urban Technology course at the Beuth Uni
 Please have a look at the [slides](./reports/slides.pdf) of the internal given presentation. A simulation of the rainfalls in 2017 are [here available](https://www.dropbox.com/sh/xhl0benckd0pe3h/AAAq-ntIGVHpD5AdtqRwG5iIa?dl=0).
 
 
-## Generating the Notebooks
-
-Since I used Jupytext for easier version control, there are unfortunately no rendered notebooks. To generate them, use:
-```
-jupytext --to ipynb notebooks/*.py
-```
-
 
 ## Information about the Scaffold
 
@@ -57,19 +50,6 @@ Optional and needed only once after `git clone`:
    ```
    This is useful to avoid large diffs due to plots in your notebooks.
    A simple `nbstripout --uninstall` will revert these changes.
-
-6. enable [jupytext] for better version control of notebooks:
-    ```
-    jupyter nbextension enable --py jupytext                    # enable extension
-    jupytext --set-formats ipynb,py:percent notebooks/*.ipynb   # link notebooks - or create notebooks from version controlled .py files.
-    jupytext --to ipynb notebooks/*.py
-    ```
-
-    If notebook errors with something like python file and ipynb file are out of sync use:
-    ```
-    jupytext --sync <notebook>
-    ```
-
 
 Then take a look into the `scripts` and `notebooks` folders.
 
