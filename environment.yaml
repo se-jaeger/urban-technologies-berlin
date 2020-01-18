@@ -29,4 +29,3 @@ dependencies:
   - nbstripout
   - sphinx
   - recommonmark
-  - jupytext
