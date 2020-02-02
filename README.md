@@ -1,6 +1,6 @@
 # Simulation of Heavy Rain in Berlin
 
-Simulates the water mass flows in Berlin after strong precipitation. Uses exclusively open data sources like the [Berlin Open Data Portal](https://daten.berlin.de).
+Simulates the water mass flows in Berlin after strong precipitation. Uses exclusively data form the [Berlin Open Data Portal](https://daten.berlin.de).
 
 
 ## Thank You!
@@ -12,7 +12,40 @@ Many thanks to my fellow student and friend [chrisschroer](https://github.com/ch
 
 This project carried out as part of the Urban Technology course at the Beuth University of Applied Sciences in Berlin of the masters course Data Science. Please note this.
 
-Please have a look at the [slides](./reports/slides.pdf) of the internal given presentation. A simulation of the rainfalls in 2017 are [here available](https://www.dropbox.com/sh/xhl0benckd0pe3h/AAAq-ntIGVHpD5AdtqRwG5iIa?dl=0).
+Please have a look at the [slides](./reports/slides.pdf) of the internal given presentation. A simulation of the rainfalls in 2017 are [here available](https://github.com/se-jaeger/urban-technologies-berlin/blob/master/data/interim/simulation/berlin_17.gif).
+
+
+## Data and Data Licence
+
+This repository contains two datasets, and variants thereof, of the [Berlin Open Data Portal](https://daten.berlin.de) and one combining both.
+
+The data can be found in the directory: [data/preprocessed](data/preprocessed)
+
+
+### Dataset: Versiegelung 2016 (Ausgabe 2017)
+
+Nutzungsbedingungen: Für die Nutzung der Daten ist die Datenlizenz Deutschland - Namensnennung - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/by-2-0 abrufbar. Der Quellenvermerk gemäß (2) der Lizenz lautet "Umweltatlas Berlin / Versiegelung 2016 (Ausgabe 2017)"
+
+**Original Data:** https://fbinter.stadt-berlin.de/fb/berlin/service_intern.jsp?id=sach_nutz2015_nutzsa@senstadt&type=WFS
+
+**Changes:** The file format is `geojson` and columns are omitted
+
+
+### Dataset: ATKIS® DGM − Digitales Geländemodell
+
+Nutzungsbedingungen: Für die Nutzung der Daten ist die Datenlizenz Deutschland - Namensnennung - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/by-2-0 abrufbar. Der Quellenvermerk gemäß (2) der Lizenz lautet "Umweltatlas Berlin / ATKIS® DGM − Digitales Geländemodell"
+
+**Original Data:** https://fbinter.stadt-berlin.de/fb/berlin/service_intern.jsp?id=a_dgm@senstadt&type=FEED
+
+Tool to download and create this data set is provided in https://github.com/se-jaeger/berlin-gelaendemodelle-downloader
+
+
+### Dataset: Sealing and Ground Level of Berlin
+
+Combines the two above mentioned datasets and is redistributed under the same licence.
+
+Nutzungsbedingungen: Für die Nutzung der Daten ist die Datenlizenz Deutschland - Namensnennung - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/by-2-0 abrufbar. Der Quellenvermerk gemäß (2) der Lizenz lautet "Umweltatlas Berlin / ATKIS® DGM − Sealing and Ground Level of Berlin"
+
 
 
 
