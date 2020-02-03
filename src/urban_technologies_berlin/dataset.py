@@ -32,8 +32,8 @@ def create_dataset(download: bool, compress: int):
     # some necessary values
     path = "data/preprocessed"
     file_name = "ground-level_sealing.geojson"
-    subset_path = "data/raw/ground_level"
-    sealing = "data/interim/sealing/sealing.geojson"
+    subset_path = "data/raw/ground_level/compressed/geojson"
+    sealing = "data/preprocessed/sealing.geojson"
 
     # download the data
     if download:
