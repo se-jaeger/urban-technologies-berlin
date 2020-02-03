@@ -46,7 +46,7 @@ def create_dataset(download: bool, compress: int):
             download_path="data/raw/ground_level",
             keep_original=False,
             compress=compress,
-            file_format=("geojson")
+            file_format=("geojson",)
         )
 
     # read all ground level subsets and combine to one
