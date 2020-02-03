@@ -15,7 +15,7 @@ This project carried out as part of the Urban Technology course at the Beuth Uni
 Please have a look at the [slides](./reports/slides.pdf) of the internal given presentation. A simulation of the rainfalls in 2017 are [here available](./data/interim/simulation/berlin_17.gif).
 
 
-## Data and Data Licence
+## Data and Licence
 
 This repository contains two datasets, and variants thereof, of the [Berlin Open Data Portal](https://daten.berlin.de) and one combining both.
 
@@ -46,7 +46,21 @@ Combines the two above mentioned datasets and is redistributed under the same li
 
 Nutzungsbedingungen: Für die Nutzung der Daten ist die Datenlizenz Deutschland - Namensnennung - Version 2.0 anzuwenden. Die Lizenz ist über https://www.govdata.de/dl-de/by-2-0 abrufbar. Der Quellenvermerk gemäß (2) der Lizenz lautet "Umweltatlas Berlin / ATKIS® DGM − Sealing and Ground Level of Berlin"
 
+#### Create the Dataset
 
+Download this repository, install the package and unse the CLI.
+
+```bash
+git clone git@github.com:se-jaeger/urban-technologies-berlin.git
+cd urban-technologies-berlin
+
+# create and activate environment if you like
+
+python setup.py install
+utberlin create-dataset --download --compress 5 # compress from 1x1 pixels into 5x5 pixels
+```
+
+For problems with the `Rtree` package, try to manually install `spatialindex` with brew: `brew install spatialindex`
 
 
 ## Information about the Scaffold
