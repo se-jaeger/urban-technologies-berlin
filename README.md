@@ -12,7 +12,7 @@ Many thanks to my fellow student and friend [chrisschroer](https://github.com/ch
 
 This project carried out as part of the Urban Technology course at the Beuth University of Applied Sciences in Berlin of the masters course Data Science. Please note this.
 
-Please have a look at the [slides](./reports/slides.pdf) of the internal given presentation. A simulation of the rainfalls in 2017 are [here available](https://github.com/se-jaeger/urban-technologies-berlin/blob/master/data/interim/simulation/berlin_17.gif).
+Please have a look at the [slides](./reports/slides.pdf) of the internal given presentation. A simulation of the rainfalls in 2017 are [here available](./data/interim/simulation/berlin_17.gif).
 
 
 ## Data and Data Licence
