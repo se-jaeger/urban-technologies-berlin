@@ -38,6 +38,10 @@ def create_dataset(download: bool, compress: int):
     # download the data
     if download:
         click.echo(f"Download data and compress to {compress}x{compress}m pixel")
+
+        if not os.path.exists(subset_path):
+            os.mkdir(subset_path)
+
         download_data(
             download_path="data/raw/ground_level",
             keep_original=False,
